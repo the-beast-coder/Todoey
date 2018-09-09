@@ -12,8 +12,14 @@ class TodoListViewController: UITableViewController {
 
     var itemArray = ["saad my dude","hee the thiing", "hamoodMyDude"]
     
+    var defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
         
     }
     
@@ -48,6 +54,7 @@ class TodoListViewController: UITableViewController {
             print("success")
             self.itemArray.append(textField.text!)
             self.tableView.reloadData()
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
         })
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create new item"
